@@ -36,7 +36,6 @@ const getProducts = async (req, res) => {
     }
 };
 
-
 const updateProduct = async (req, res) => {
     try {
         const { barcode } = req.params
@@ -60,7 +59,54 @@ const updateProduct = async (req, res) => {
     }
 }
 
+const getDistinctClusters = async (req, res) => {
+    try {
+        const clusters = await Product.distinct('cluster');
+        res.status(200).json({ clusters });
+    } catch (error) {
+        console.error('Error fetching distinct clusters:', error);
+        res.status(500).json({ message: 'خطا در دریافت لیست خوشه‌ها.' });
+    }
+};
+
+const getDistinctChildClusters = async (req, res) => {
+    const { cluster } = req.query;
+
+    if (!cluster) {
+        return res.status(400).json({ message: 'خوشه مورد نظر را انتخاب کنید.' });
+    }
+
+    try {
+        const childClusters = await Product.distinct('child_cluster', { cluster });
+        res.status(200).json({ childClusters });
+    } catch (error) {
+        console.error('Error fetching distinct child clusters:', error);
+        res.status(500).json({ message: 'خطا در دریافت لیست زیر خوشه‌ها.' });
+    }
+};
+
+const getDistinctClustersWithChildren = async (req, res) => {
+    try {
+        const clusters = await Product.distinct('cluster');
+
+        const clustersWithChildren = await Promise.all(
+            clusters.map(async (cluster) => {
+                const childClusters = await Product.distinct('child_cluster', { cluster });
+                return { cluster, childClusters };
+            })
+        );
+
+        res.status(200).json({ clustersWithChildren });
+    } catch (error) {
+        console.error('Error fetching clusters and child clusters:', error);
+        res.status(500).json({ message: 'خطا در دریافت لیست خوشه‌ها و زیر خوشه‌ها.' });
+    }
+};
+
 module.exports = {
     getProducts,
-    updateProduct
+    updateProduct,
+    getDistinctClusters,
+    getDistinctChildClusters,
+    getDistinctClustersWithChildren
 };
