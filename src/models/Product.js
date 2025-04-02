@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    Main_data_status: { type: String, required: true },
-    Extra_data_status: { type: String },
+    main_data_status: { type: Number, required: true },
+    extra_data_status: { type: String },
     importer: { type: String },
     monitor: { type: String, required: true },
-    cluster: { type: String, required: false },
-    child_cluster: { type: String, required: false },
+    cluster: { type: String },
+    child_cluster: { type: String },
     product_name: { type: String, required: true },
     brand: { type: String, required: true },
     picture_old: { type: String },
     picture_new: { type: String },
     picture_main_info: { type: String },
     picture_extra_info: { type: String },
-    product_description: { type: String, required: false },
-    barcode: { type: String, unique: true, required: true },
-    state_of_matter: { type: String },
-    per: { type: String },
-    calorie: { type: String },
-    sugar: { type: String },
-    fat: { type: String },
-    salt: { type: String },
-    trans_fatty_acids: { type: String },
+    product_description: { type: String },
+    barcode: { type: Number, unique: true, required: true },
+    state_of_matter: { type: Number },
+    per: { type: Number },
+    calorie: { type: Number },
+    sugar: { type: Number },
+    fat: { type: Number },
+    salt: { type: Number },
+    trans_fatty_acids: { type: Number },
     per_ext: { type: String },
     calorie_ext: { type: String },
     cal_fat: { type: String },
@@ -38,4 +38,5 @@ const productSchema = new mongoose.Schema({
     cholesterol: { type: String }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Product', productSchema, 'Salemina_new');
+
+module.exports = mongoose.model('Product', productSchema, 'products_data');
