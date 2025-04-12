@@ -6,7 +6,8 @@ const {
     getDistinctClusters,
     getDistinctChildClusters,
     getDistinctClustersWithChildren,
-    getProductsByUserGroupedByStatus
+    getProductsByUserGroupedByStatus,
+    getDistinctImporters
 } = require('../controllers/productController');
 
 router.get('/products', getProducts);
@@ -15,5 +16,6 @@ router.get('/distinct-clusters', getDistinctClusters);
 router.get('/distinct-child-clusters', getDistinctChildClusters);
 router.get('/distinct-clusters-and-children', getDistinctClustersWithChildren);
 router.get('/user-products/:username', getProductsByUserGroupedByStatus);
+router.get('/distinct-importers', getDistinctImporters);
 
 module.exports = router;

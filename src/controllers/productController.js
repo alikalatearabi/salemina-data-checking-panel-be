@@ -204,11 +204,22 @@ const getProductsByUserGroupedByStatus = async (req, res) => {
     }
 };
 
+const getDistinctImporters = async (req, res) => {
+    try {
+        const importers = await Product.distinct('importer');
+        res.status(200).json({ importers });
+    } catch (error) {
+        console.error('Error fetching distinct importers:', error);
+        res.status(500).json({ message: 'خطا در دریافت لیست واردکنندگان.', error: error.message });
+    }
+};
+
 module.exports = {
     getProducts,
     updateProduct,
     getDistinctClusters,
     getDistinctChildClusters,
     getDistinctClustersWithChildren,
-    getProductsByUserGroupedByStatus
+    getProductsByUserGroupedByStatus,
+    getDistinctImporters
 };
